@@ -17,7 +17,7 @@
 </head>
 <body>
 
-  <div class="container mt-5">
+<div class="container mt-5">
     <!-- titoli delle tabs -->
     <ul class="nav nav-tabs" id="tabs" role="tablist">
       <li class="nav-item">
@@ -53,40 +53,40 @@
 
         <!-- Tab Subnetting Fisso -->
         <div class="tab-pane fade" id="subnetting" role="tabpanel" aria-labelledby="subnetting-tab">
-            <h1>Subnetting Fisso</h1>
-            <div class="form-group"> <!-- Casella di testo rete iniziale -->
-                <label for="subnettingMajorNetInput">Indirizzo di rete:</label>
-                <input type="text" class="form-control" id="subnettingStMajorNetInput" placeholder="Inserire l'indirizzo di rete" >
+                <h1>Subnetting Fisso</h1>
+                <div class="form-group"> <!-- Casella di testo rete iniziale -->
+                    <label for="subnettingMajorNetInput">Indirizzo di rete:</label>
+                    <input type="text" class="form-control" id="subnettingStMajorNetInput" placeholder="Inserire l'indirizzo di rete" >
+                </div>
+                <button type="button" class="btn btn-primary" onclick="findNetworks()">CALCOLA POSSIBILI SUBNET</button>
+                <div class="form-group"> <!-- Combobox per selezionare la subnet desiderata -->
+                    <label for="subnettingSubnetSizeInput">Subnet:</label>
+                    <select class="form-control" id="cidrSubnettingSelect" onchange="updateSubnetInfo()">
+                        <!-- 
+                            Le possibili subnet vengono calcolate in base alla rete iniziale inserita
+                         -->
+                    </select>
+                </div> 
             </div>
-            <button type="button" class="btn btn-primary" onclick="findNetworks()">CALCOLA POSSIBILI SUBNET</button>
-            <div class="form-group"> <!-- Combobox per selezionare la subnet desiderata -->
-                <label for="subnettingSubnetSizeInput">Subnet:</label>
-                <select class="form-control" id="cidrSubnettingSelect" onchange="updateSubnetInfo()">
-                    <!-- 
-                        Le possibili subnet vengono calcolate in base alla rete iniziale inserita
-                     -->
-                </select>
-            </div> 
-      </div>
-    </div>
+        </div>
 
-    <!-- Risultati subnetting -->
-    <table class="table mt-2">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>DIMENSIONE</th>
-          <th>INDIRIZZO RETE</th>
-          <th>CIDR</th>
-          <th>SUBNETMASK</th>
-          <th>RANGE</th>
-          <th>BROADCAST</th>
-        </tr>
-      </thead>
-      <tbody id="resultsTableBody">
-        <!-- Risultati inseriti automaticamente dopo il calcolo -->
-      </tbody>
-    </table>
-  </div>
+        <!-- Risultati subnetting -->
+        <table class="table mt-2">
+            <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>DIMENSIONE</th>
+                  <th>INDIRIZZO RETE</th>
+                  <th>CIDR</th>
+                  <th>SUBNETMASK</th>
+                  <th>RANGE</th>
+                  <th>BROADCAST</th>
+              </tr>
+            </thead>
+            <tbody id="resultsTableBody">
+                <!-- Risultati inseriti automaticamente dopo il calcolo -->
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
