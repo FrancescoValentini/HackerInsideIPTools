@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  
+  <script src="js/VLSM.js" defer></script> <!-- Calcolo VLSM -->
+  <script src="js/findPossibleNetworks.js" defer></script> <!-- Calcolo reti possibili da CIDR -->
+  <script src="js/main.js" defer></script> <!-- core app -->
+
+  <title>HackerInside IPTools</title>
+</head>
+<body>
+
+  <div class="container mt-5">
+    <!-- titoli delle tabs -->
+    <ul class="nav nav-tabs" id="tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="vlsm-tab" data-toggle="tab" href="#vlsm" role="tab" aria-controls="vlsm" aria-selected="true">VLSM</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="subnetting-tab" data-toggle="tab" href="#subnetting" role="tab" aria-controls="subnetting" aria-selected="false">Subnetting Fisso</a>
+      </li>
+    </ul>
+
+    <!-- contenitore tabs -->
+    <div class="tab-content mt-3">
+        <!-- Tab VLSM -->
+        <div class="tab-pane fade show active" id="vlsm" role="tabpanel" aria-labelledby="vlsm-tab">
+            <h1>VLSM</h1>
+            <div class="form-group"> <!-- Casella di testo rete iniziale -->
+                <label for="ipInput">Indirizzo di rete:</label>
+                <input type="text" class="form-control" id="ipInput" placeholder="Inserire l'indirizzo di rete">
+            </div>
+            <div class="form-group">
+                <label for="subnetInput">Numero di subnet:</label><!-- Casella di testo numero subnet -->
+                <input type="number" class="form-control" id="subnetInput" placeholder="Numero di subnet" onchange="generateSubnetInputs()">
+            </div>
+            <div id="subnetSizeInputs" class="form-group">
+                <!-- 
+                    Caselle di testo generate automaticamente in base al numero di subnet,
+                    ognuna contiene la dimensione della subnet
+                -->
+            </div>
+            <!-- Bottone per il calcolo -->
+            <button type="button" class="btn btn-primary" onclick="calculateVLSM()">CALCOLA</button>
+        </div>
+
+        <!-- Tab Subnetting Fisso -->
+        <div class="tab-pane fade" id="subnetting" role="tabpanel" aria-labelledby="subnetting-tab">
+            <h1>Subnetting Fisso</h1>
+            <div class="form-group"> <!-- Casella di testo rete iniziale -->
+                <label for="subnettingMajorNetInput">Indirizzo di rete:</label>
+                <input type="text" class="form-control" id="subnettingStMajorNetInput" placeholder="Inserire l'indirizzo di rete" >
+            </div>
+            <button type="button" class="btn btn-primary" onclick="findNetworks()">CALCOLA POSSIBILI SUBNET</button>
+            <div class="form-group"> <!-- Combobox per selezionare la subnet desiderata -->
+                <label for="subnettingSubnetSizeInput">Subnet:</label>
+                <select class="form-control" id="cidrSubnettingSelect" onchange="updateSubnetInfo()">
+                    <!-- 
+                        Le possibili subnet vengono calcolate in base alla rete iniziale inserita
+                     -->
+                </select>
+            </div> 
+      </div>
+    </div>
+
+    <!-- Risultati subnetting -->
+    <table class="table mt-2">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>DIMENSIONE</th>
+          <th>INDIRIZZO RETE</th>
+          <th>CIDR</th>
+          <th>SUBNETMASK</th>
+          <th>RANGE</th>
+          <th>BROADCAST</th>
+        </tr>
+      </thead>
+      <tbody id="resultsTableBody">
+        <!-- Risultati inseriti automaticamente dopo il calcolo -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
