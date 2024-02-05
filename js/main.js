@@ -111,7 +111,7 @@ function calculateVLSM() {
             showErrorModal("Errore! Rete fornita non sufficientemente grande!");
             break;
         }else{
-            subnets[String.fromCharCode(65 + i)] = size;
+            subnets[i] = size;
         }
         
     }
