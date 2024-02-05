@@ -24,7 +24,11 @@ selectElement.addEventListener("change", function() { // LIstener evento change 
 
 // Data una rete formato CIDR calcola tutte le possibili subnet
 function findNetworks() {
-    const cidr = document.getElementById('subnettingStMajorNetInput').value.split("/")[1];
+    const majorNetwork = document.getElementById('subnettingStMajorNetInput').value; // rete principale
+    const cidr = majorNetwork.split("/")[1];
+    if(!validateIP(majorNetwork)){
+        return;
+    }
     networks = findPossibleNetworks(parseInt(cidr));
     populateSelectOptions(networks);
 }
@@ -87,14 +91,29 @@ function generateSubnetInputs() {
 // Calcola il VLSM e visualizza i risultati
 function calculateVLSM() {
     const ip = document.getElementById('ipInput').value;
+
+    if(!validateIP(ip)){
+        return;
+    }
+
     const numSubnets = parseInt(document.getElementById('subnetInput').value, 10);
     const subnetSizeInputs = document.getElementById('subnetSizeInputs');
 
-    
+    const cidr = parseInt(document.getElementById('ipInput').value.split("/")[1]);
     const subnets = {};
+    var cnt = 0;
+
     for (let i = 0; i < numSubnets; i++) {
         const size = parseInt(subnetSizeInputs.children[i].value, 10);
-        subnets[String.fromCharCode(65 + i)] = size;
+        cnt += size;
+        if(cnt > Math.pow(2,(32-cidr))){
+            
+            showErrorModal("Errore! Rete fornita non sufficientemente grande!");
+            break;
+        }else{
+            subnets[String.fromCharCode(65 + i)] = size;
+        }
+        
     }
 
     const majorNetwork = ip;
@@ -118,4 +137,26 @@ function printResult(output){
             <td>${subnet.broadcast}</td>
         `;
     });
+}
+
+// Modal per messaggi di errore
+function showErrorModal(errorMessage) {
+    // Aggiorna il testo del messaggio di errore nel modal
+    document.getElementById('errorMessage').innerText = errorMessage;
+
+    // Mostra il modal
+    $('#errorModal').modal('show');
+}
+
+// Verifica validità indirizzo fornito
+function validateIP(addr){
+    const regexp = /(25[0-5]|2[0-4]\d|1\d\d|\d\d|\d)\.(25[0-5]|2[0-4]\d|1\d\d|\d\d|\d)\.(25[0-5]|2[0-4]\d|1\d\d|\d\d|\d)\.(25[0-5]|2[0-4]\d|1\d\d|\d\d|\d)\/\d{1,2}/g;
+    var match = addr.match(regexp);
+
+    if(match != null){
+        return true;
+    }else{
+        showErrorModal("Indirizzo non valido!");
+        return false;
+    }
 }
