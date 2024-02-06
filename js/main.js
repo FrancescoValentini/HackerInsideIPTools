@@ -83,7 +83,7 @@ function generateSubnetInputs() {
         const input = document.createElement('input');
         input.type = 'number';
         input.className = 'form-control';
-        input.placeholder = `Enter Size for Subnet ${i}`;
+        input.placeholder = `Dimensione subnet ${i}`;
         subnetSizeInputs.appendChild(input);
     }
 }
